@@ -1,0 +1,941 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "contract IStdReference",
+						"name": "_bandOracle",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_base",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_quote",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_updateFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint16",
+						"name": "chainId",
+						"type": "uint16"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "sequenceNumber",
+						"type": "uint64"
+					}
+				],
+				"name": "BatchPriceFeedUpdate",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "oldOwner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnerChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnerNominated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "id",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "publishTime",
+						"type": "uint64"
+					},
+					{
+						"indexed": false,
+						"internalType": "int64",
+						"name": "price",
+						"type": "int64"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "conf",
+						"type": "uint64"
+					}
+				],
+				"name": "PriceFeedUpdate",
+				"type": "event"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "acceptOwnership",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "bandOracle",
+				"outputs": [
+					{
+						"internalType": "contract IStdReference",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "base",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "getAnswer",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "getEmaPrice",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "int64",
+								"name": "price",
+								"type": "int64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "conf",
+								"type": "uint64"
+							},
+							{
+								"internalType": "int32",
+								"name": "expo",
+								"type": "int32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "publishTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PythStructs.Price",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "getEmaPriceNoOlderThan",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "int64",
+								"name": "price",
+								"type": "int64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "conf",
+								"type": "uint64"
+							},
+							{
+								"internalType": "int32",
+								"name": "expo",
+								"type": "int32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "publishTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PythStructs.Price",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "getEmaPriceUnsafe",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "int64",
+								"name": "price",
+								"type": "int64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "conf",
+								"type": "uint64"
+							},
+							{
+								"internalType": "int32",
+								"name": "expo",
+								"type": "int32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "publishTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PythStructs.Price",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "getPrice",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "int64",
+								"name": "price",
+								"type": "int64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "conf",
+								"type": "uint64"
+							},
+							{
+								"internalType": "int32",
+								"name": "expo",
+								"type": "int32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "publishTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PythStructs.Price",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "getPriceNoOlderThan",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "int64",
+								"name": "price",
+								"type": "int64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "conf",
+								"type": "uint64"
+							},
+							{
+								"internalType": "int32",
+								"name": "expo",
+								"type": "int32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "publishTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PythStructs.Price",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "getPriceUnsafe",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "int64",
+								"name": "price",
+								"type": "int64"
+							},
+							{
+								"internalType": "uint64",
+								"name": "conf",
+								"type": "uint64"
+							},
+							{
+								"internalType": "int32",
+								"name": "expo",
+								"type": "int32"
+							},
+							{
+								"internalType": "uint256",
+								"name": "publishTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PythStructs.Price",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint80",
+						"name": "_roundId",
+						"type": "uint80"
+					}
+				],
+				"name": "getRoundData",
+				"outputs": [
+					{
+						"internalType": "uint80",
+						"name": "",
+						"type": "uint80"
+					},
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint80",
+						"name": "",
+						"type": "uint80"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "getTimestamp",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "updateData",
+						"type": "bytes[]"
+					}
+				],
+				"name": "getUpdateFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "feeAmount",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getValidTimePeriod",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "latestRound",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "latestRoundData",
+				"outputs": [
+					{
+						"internalType": "uint80",
+						"name": "",
+						"type": "uint80"
+					},
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint80",
+						"name": "",
+						"type": "uint80"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "nominateNewOwner",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "nominatedOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "updateData",
+						"type": "bytes[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "priceIds",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "uint64",
+						"name": "minPublishTime",
+						"type": "uint64"
+					},
+					{
+						"internalType": "uint64",
+						"name": "maxPublishTime",
+						"type": "uint64"
+					}
+				],
+				"name": "parsePriceFeedUpdates",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "bytes32",
+								"name": "id",
+								"type": "bytes32"
+							},
+							{
+								"components": [
+									{
+										"internalType": "int64",
+										"name": "price",
+										"type": "int64"
+									},
+									{
+										"internalType": "uint64",
+										"name": "conf",
+										"type": "uint64"
+									},
+									{
+										"internalType": "int32",
+										"name": "expo",
+										"type": "int32"
+									},
+									{
+										"internalType": "uint256",
+										"name": "publishTime",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct PythStructs.Price",
+								"name": "price",
+								"type": "tuple"
+							},
+							{
+								"components": [
+									{
+										"internalType": "int64",
+										"name": "price",
+										"type": "int64"
+									},
+									{
+										"internalType": "uint64",
+										"name": "conf",
+										"type": "uint64"
+									},
+									{
+										"internalType": "int32",
+										"name": "expo",
+										"type": "int32"
+									},
+									{
+										"internalType": "uint256",
+										"name": "publishTime",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct PythStructs.Price",
+								"name": "emaPrice",
+								"type": "tuple"
+							}
+						],
+						"internalType": "struct PythStructs.PriceFeed[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "pullDataAndCache",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "int256",
+								"name": "rate",
+								"type": "int256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "round",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct BandOracleReader.RateAtRound",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "quote",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_fee",
+						"type": "uint256"
+					}
+				],
+				"name": "setUpdateFee",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "updateFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "",
+						"type": "bytes[]"
+					}
+				],
+				"name": "updatePriceFeeds",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "",
+						"type": "bytes[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "uint64[]",
+						"name": "",
+						"type": "uint64[]"
+					}
+				],
+				"name": "updatePriceFeedsIfNecessary",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "withdraw",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/BandOracleReader.sol": "BandOracleReader"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/BandOracleInterfaces.sol": {
+			"keccak256": "0x7ec25a6da96d4d792101d24e63b4916903bcba0dcb9bce94fbd78a36ffe8599a",
+			"urls": [
+				"bzz-raw://5453f5a82dac617aa9d6d49b5348970056c77b1a4908b163294f5a7b403fc5e8",
+				"dweb:/ipfs/QmYASghZKowWy11WpDfpvhhQ2s3X2ezivYvfvVWhbCJBAk"
+			]
+		},
+		"contracts/BandOracleReader.sol": {
+			"keccak256": "0x054be0aa8948b83e8da0950769afbc982392806c9fa003bd050a598d813a4e05",
+			"urls": [
+				"bzz-raw://ba4a3de9b08aeea51f611044119cf791ff838258141f2a94bb8b7646ebd00c82",
+				"dweb:/ipfs/QmaRkJZQFVecW5Ny99EQkknHJL8adU3kFDpZHEFtzvh7j2"
+			]
+		},
+		"contracts/Owned.sol": {
+			"keccak256": "0x94ad46b553acf67dc16a1f6af25b0b4841e78737edd411c2f9dd399a2a968f26",
+			"urls": [
+				"bzz-raw://3afcfcefc309844707d0844bc0d3f889664d544e84d67bb6cb68d6e2efd98638",
+				"dweb:/ipfs/QmYETCT17NxFHzsQ9L3ZjM7cPeUFFF5yFsFB3sEJLBhXMY"
+			]
+		},
+		"contracts/interfaces/AggregatorV2V3Interface.sol": {
+			"keccak256": "0x9936395cd142182a7789869c82c1b90ee3513d4ce7254879d1eeead73aea6be0",
+			"urls": [
+				"bzz-raw://75e3ff00d8b6c3ce8b3c979c000e1e213a7442200944a3e7f4280310ab97f81a",
+				"dweb:/ipfs/QmZfhVUU83PEvL3KZrzCGCmL9khEyGLMrDXy7dSNNV2hTn"
+			]
+		},
+		"contracts/interfaces/IPyth.sol": {
+			"keccak256": "0x1ecebb4715c36b1f2aec15c60e2ac5955eb8df250dca27d20a39d7843d4b17bd",
+			"urls": [
+				"bzz-raw://d9be5dab07db8df9c80faa9381816f76b0ca95b070c0c0da9f8797bc44b40f88",
+				"dweb:/ipfs/QmTwdyBYu1dj9JG1WagAE4W37vVQBpgCEjHoYSPfDHyMDh"
+			]
+		},
+		"contracts/interfaces/PythStructs.sol": {
+			"keccak256": "0x3f4075dbbadf89e1ebd9b0484ee3832ccc6695ed03b8e59348c5565165623d36",
+			"urls": [
+				"bzz-raw://5700fddaec5d6eff71306d4575b7a40bf48e2af5814e5d46fb3ea3862ee1ef58",
+				"dweb:/ipfs/QmREU92U2PUBaejMW2mibWSjgKJ1o8WPXSHwFdvgecWMNJ"
+			]
+		}
+	},
+	"version": 1
+}
