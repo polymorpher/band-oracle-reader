@@ -142,6 +142,13 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
         return (uint80(round), int256(data.rate), round, round, uint80(round));
     }
 
+    // ========= GMX VaultPriceFeed integration =========
+    function latestAnswer() external view returns (int256) {
+        (, int256 rate, uint256 time, , ) = _latestRoundData();
+
+        return int64(rate / 1e9);
+    }
+
     // =============================================
 
     // ========= Pyth Interface =========
