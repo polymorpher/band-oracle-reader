@@ -1,0 +1,14 @@
+[profile.default]
+src = 'contracts'
+test = 'test/foundry'
+out = 'artifacts/contracts'
+libs = ['lib']
+no_match_path = "contracts/*"
+solc_version = '0.5.16'
+optimizer = true
+optimizer_runs = 18_000
+viaIR = false
+eth_rpc_url = "https://api.harmony.one"
+
+[profile.test]
+fork_block_number = 61451319
