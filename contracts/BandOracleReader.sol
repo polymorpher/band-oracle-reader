@@ -6,6 +6,8 @@ import {SynthOracle} from "./SynthOracle.sol";
 contract BandOracleReader is SynthOracle {
 
     IStdReference public bandOracle;
+    string public base;
+    string public quote;
 
     constructor(
         IStdReference _bandOracle,

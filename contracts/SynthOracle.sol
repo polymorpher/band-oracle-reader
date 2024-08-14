@@ -13,14 +13,6 @@ interface ISynthOracle is AggregatorV2V3Interface, IPyth {
         uint256 round;
     }
 
-    function bandOracle() view external returns (IStdReference);
-
-    function base() view external returns (string);
-
-    function quote() view external returns (string);
-
-    function updateFee() view external returns (uint256);
-
     function updateFee() view external returns (uint256);
 
     function pullDataAndCache() external returns (RateAtRound memory);
@@ -35,9 +27,6 @@ abstract contract SynthOracle is ISynthOracle, Owned {
     // only available after solidity v0.8.4
     // error NotImplemented();
     string constant NOT_IMPLEMENTED = "NOT_IMPLEMENTED";
-
-    string public base;
-    string public quote;
 
     mapping(uint256 => int256) internal roundData;
 
