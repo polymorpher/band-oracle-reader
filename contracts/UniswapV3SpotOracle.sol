@@ -32,7 +32,9 @@ contract UniswapV3SpotOracle is SynthOracle {
 
     function _readUniswapPrice() view internal returns (uint256){
         (uint160 sqrtPriceX96,,,,,,) = pool.slot0();
-        uint256 price = (uint256(sqrtPriceX96) * uint256(sqrtPriceX96) * 1e18) >> 192;
+        uint256 priceX128 = (uint256(sqrtPriceX96) * uint256(sqrtPriceX96)) >> 64;
+        priceX128 = priceX128 * 1e9;
+        uint256 price = priceX128 >> 128;
         if (token0Decimals > token1Decimals) {
             price = price * (10 ** (token0Decimals - token1Decimals));
         } else if (token0Decimals < token1Decimals) {
@@ -56,7 +58,7 @@ contract UniswapV3SpotOracle is SynthOracle {
     }
 
     function decimals() external view returns (uint8) {
-        return 18;
+        return 9;
     }
 
     function getRoundData(uint80 _roundId)
@@ -105,7 +107,7 @@ contract UniswapV3SpotOracle is SynthOracle {
     returns (
         PythStructs.Price memory p
     ){
-        p.price = int64(uint64(_readUniswapPrice() / 1e9));
+        p.price = int64(uint64(_readUniswapPrice()));
         p.expo = 9;
         p.publishTime = block.timestamp;
         return p;
