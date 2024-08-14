@@ -30,7 +30,7 @@ contract UniswapV3SpotOracle is SynthOracle {
         token1Decimals = IERC20Metadata(token1).decimals();
     }
 
-    function _readUniswapPrice() internal returns (uint256){
+    function _readUniswapPrice() view internal returns (uint256){
         (uint160 sqrtPriceX96,,,,,,) = pool.slot0();
         uint256 price = (uint256(sqrtPriceX96) * uint256(sqrtPriceX96) * 1e18) >> 192;
         if (token0Decimals > token1Decimals) {
@@ -105,7 +105,7 @@ contract UniswapV3SpotOracle is SynthOracle {
     returns (
         PythStructs.Price memory p
     ){
-        p.price = uint64(_readUniswapPrice() / 1e9);
+        p.price = int64(uint64(_readUniswapPrice() / 1e9));
         p.expo = 9;
         p.publishTime = block.timestamp;
         return p;

@@ -40,19 +40,19 @@ abstract contract SynthOracle is ISynthOracle, Owned {
     function getAnswer(
         uint256 /*roundId*/
     ) external view returns (int256) {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 
     function getTimestamp(
         uint256 /*roundId*/
     ) external view returns (uint256) {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 
     // Owner functions
 
     function withdraw() external onlyOwner {
-        (bool success,) = owner.call.value(address(this).balance)("");
+        (bool success,) = owner.call{value: address(this).balance}("");
         require(success, "withdrawal failed");
     }
 
@@ -68,7 +68,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         uint /*validTimePeriod*/
     )
     {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 
 
@@ -82,7 +82,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 
     function getEmaPrice(
@@ -94,7 +94,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 
     function getEmaPriceUnsafe(
@@ -106,7 +106,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 
     function getEmaPriceNoOlderThan(
@@ -119,7 +119,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 
 
@@ -135,6 +135,6 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.PriceFeed[] memory /*priceFeeds*/
     )
     {
-        revert(NotImplemented());
+        revert NotImplemented();
     }
 }
