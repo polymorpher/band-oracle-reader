@@ -1,7 +1,7 @@
-pragma solidity ^0.5.16;
-pragma experimental ABIEncoderV2;
+pragma solidity ^0.8.18;
 
 import {SynthOracle} from "./SynthOracle.sol";
+import {PythStructs} from "./interfaces/PythStructs.sol";
 import {IUniswapV3Pool} from "v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 import {ERC20Detailed} from "openzeppelin-contracts/token/ERC20/ERC20Detailed.sol";
 
@@ -20,7 +20,7 @@ contract UniswapV3SpotOracle is SynthOracle {
         bool _inverse,
         uint256 _updateFee,
         address _owner
-    ) public Owned(_owner) {
+    ) public SynthOracle(_owner) {
         pool = _pool;
         inverse = _inverse;
         updateFee = _updateFee;

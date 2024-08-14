@@ -1,5 +1,4 @@
-pragma solidity ^0.5.16;
-pragma experimental ABIEncoderV2;
+pragma solidity ^0.8.18;
 
 import {IStdReference} from "./BandOracleInterfaces.sol";
 import {PythStructs} from "./interfaces/PythStructs.sol";
@@ -22,27 +21,32 @@ interface ISynthOracle is AggregatorV2V3Interface, IPyth {
     function setUpdateFee(uint256 _fee) external;
 }
 
+// abstract contract was introduced in solidity 0.6.0
+// https://www.perplexity.ai/search/solidity-which-version-introdu-G4MjlroSR4.iU0CUUNSlKw
 abstract contract SynthOracle is ISynthOracle, Owned {
 
     // only available after solidity v0.8.4
-    // error NotImplemented();
-    string constant NOT_IMPLEMENTED = "NOT_IMPLEMENTED";
+    error NotImplemented();
 
     mapping(uint256 => int256) internal roundData;
 
     uint256 public updateFee;
 
+    constructor(address _owner) public Owned(_owner) {
+
+    }
+
 
     function getAnswer(
         uint256 /*roundId*/
     ) external view returns (int256) {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 
     function getTimestamp(
         uint256 /*roundId*/
     ) external view returns (uint256) {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 
     // Owner functions
@@ -64,7 +68,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         uint /*validTimePeriod*/
     )
     {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 
 
@@ -78,7 +82,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 
     function getEmaPrice(
@@ -90,7 +94,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 
     function getEmaPriceUnsafe(
@@ -102,7 +106,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 
     function getEmaPriceNoOlderThan(
@@ -115,7 +119,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.Price memory /*price*/
     )
     {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 
 
@@ -131,6 +135,6 @@ abstract contract SynthOracle is ISynthOracle, Owned {
         PythStructs.PriceFeed[] memory /*priceFeeds*/
     )
     {
-        revert(NOT_IMPLEMENTED);
+        revert(NotImplemented());
     }
 }

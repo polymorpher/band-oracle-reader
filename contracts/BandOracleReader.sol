@@ -1,6 +1,7 @@
-pragma solidity ^0.5.16;
-pragma experimental ABIEncoderV2;
+pragma solidity ^0.8.18;
 
+import {IStdReference} from "./BandOracleInterfaces.sol";
+import {PythStructs} from "./interfaces/PythStructs.sol";
 import {SynthOracle} from "./SynthOracle.sol";
 
 contract BandOracleReader is SynthOracle {
@@ -15,7 +16,7 @@ contract BandOracleReader is SynthOracle {
         string memory _quote,
         uint256 _updateFee,
         address _owner
-    ) public Owned(_owner) {
+    ) public SynthOracle(_owner) {
         bandOracle = _bandOracle;
         base = _base;
         quote = _quote;
@@ -31,8 +32,6 @@ contract BandOracleReader is SynthOracle {
         roundData[round] = int256(data.rate);
         return RateAtRound(int256(data.rate), round);
     }
-
-
 
     // ========= Chainlink interface ======
     function latestRound() external view returns (uint256) {
