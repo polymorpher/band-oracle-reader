@@ -16,7 +16,7 @@ contract BandOracleReader is SynthOracle {
         string memory _quote,
         uint256 _updateFee,
         address _owner
-    ) public SynthOracle(_owner) {
+    ) SynthOracle(_owner) {
         bandOracle = _bandOracle;
         base = _base;
         quote = _quote;

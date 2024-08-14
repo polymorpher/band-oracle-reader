@@ -3,7 +3,7 @@ pragma solidity ^0.8.18;
 import {SynthOracle} from "./SynthOracle.sol";
 import {PythStructs} from "./interfaces/PythStructs.sol";
 import {IUniswapV3Pool} from "v3-core/contracts/interfaces/IUniswapV3Pool.sol";
-import {ERC20Detailed} from "openzeppelin-contracts/token/ERC20/ERC20Detailed.sol";
+import {IERC20Metadata} from "openzeppelin-contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 contract UniswapV3SpotOracle is SynthOracle {
     IUniswapV3Pool public pool;
@@ -20,14 +20,14 @@ contract UniswapV3SpotOracle is SynthOracle {
         bool _inverse,
         uint256 _updateFee,
         address _owner
-    ) public SynthOracle(_owner) {
+    ) SynthOracle(_owner) {
         pool = _pool;
         inverse = _inverse;
         updateFee = _updateFee;
         address token0 = _pool.token0();
         address token1 = _pool.token1();
-        token0Decimals = ERC20Detailed(token0).decimals();
-        token1Decimals = ERC20Detailed(token1).decimals();
+        token0Decimals = IERC20Metadata(token0).decimals();
+        token1Decimals = IERC20Metadata(token1).decimals();
     }
 
     function _readUniswapPrice() internal returns (uint256){

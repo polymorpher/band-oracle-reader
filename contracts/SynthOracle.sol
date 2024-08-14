@@ -32,7 +32,7 @@ abstract contract SynthOracle is ISynthOracle, Owned {
 
     uint256 public updateFee;
 
-    constructor(address _owner) public Owned(_owner) {
+    constructor(address _owner) Owned(_owner) {
 
     }
 
