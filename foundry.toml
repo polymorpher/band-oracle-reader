@@ -1,13 +1,12 @@
 [profile.default]
 src = 'contracts'
-test = 'test/foundry'
+test = 'test'
 out = 'artifacts/contracts'
 libs = ['lib']
 no_match_path = "contracts/*"
 solc_version = '0.5.16'
 optimizer = true
-optimizer_runs = 18_000
-viaIR = false
+optimizer_runs = 20_000
 eth_rpc_url = "https://api.harmony.one"
 
 [profile.test]

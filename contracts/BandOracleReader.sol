@@ -1,29 +1,11 @@
 pragma solidity ^0.5.16;
 pragma experimental ABIEncoderV2;
 
-import {AggregatorV2V3Interface} from "./interfaces/AggregatorV2V3Interface.sol";
-import {IPyth} from "./interfaces/IPyth.sol";
-import {IStdReference} from "./BandOracleInterfaces.sol";
-import {PythStructs} from "./interfaces/PythStructs.sol";
-import {Owned} from "./Owned.sol";
+import {SynthOracle} from "./SynthOracle.sol";
 
-contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
-    // only available after solidity v0.8.4
-    // error NotImplemented();
-    string constant NOT_IMPLEMENTED = "NOT_IMPLEMENTED";
+contract BandOracleReader is SynthOracle {
 
     IStdReference public bandOracle;
-    string public base;
-    string public quote;
-
-    mapping(uint256 => int256) internal roundData;
-
-    uint256 public updateFee;
-
-    struct RateAtRound {
-        int256 rate;
-        uint256 round;
-    }
 
     constructor(
         IStdReference _bandOracle,
@@ -48,16 +30,7 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
         return RateAtRound(int256(data.rate), round);
     }
 
-    // Owner functions
 
-    function withdraw() external onlyOwner {
-        (bool success, ) = owner.call.value(address(this).balance)("");
-        require(success, "withdrawal failed");
-    }
-
-    function setUpdateFee(uint256 _fee) external onlyOwner {
-        updateFee = _fee;
-    }
 
     // ========= Chainlink interface ======
     function latestRound() external view returns (uint256) {
@@ -74,28 +47,17 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
         return 18;
     }
 
-    function getAnswer(
-        uint256 /*roundId*/
-    ) external view returns (int256) {
-        revert(NOT_IMPLEMENTED);
-    }
-
-    function getTimestamp(
-        uint256 /*roundId*/
-    ) external view returns (uint256) {
-        revert(NOT_IMPLEMENTED);
-    }
 
     function getRoundData(uint80 _roundId)
-        external
-        view
-        returns (
-            uint80, /*roundId*/
-            int256, /*answer*/
-            uint256, /*startedAt*/
-            uint256, /*updatedAt*/
-            uint80 /*answeredInRound*/
-        )
+    external
+    view
+    returns (
+        uint80, /*roundId*/
+        int256, /*answer*/
+        uint256, /*startedAt*/
+        uint256, /*updatedAt*/
+        uint80 /*answeredInRound*/
+    )
     {
         // There is no interface from Band oracle to retrieve previous round data
         // return previous round data if we have it, otherwise return empty data, unless round id equals block.timestamp, in which case we return the latest data
@@ -110,29 +72,29 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
     }
 
     function latestRoundData()
-        external
-        view
-        returns (
-            uint80, /*roundId*/
-            int256, /*answer*/
-            uint256, /*startedAt*/
-            uint256, /*updatedAt*/
-            uint80 /*answeredInRound*/
-        )
+    external
+    view
+    returns (
+        uint80, /*roundId*/
+        int256, /*answer*/
+        uint256, /*startedAt*/
+        uint256, /*updatedAt*/
+        uint80 /*answeredInRound*/
+    )
     {
         return _latestRoundData();
     }
 
     function _latestRoundData()
-        internal
-        view
-        returns (
-            uint80, /*roundId*/
-            int256, /*answer*/
-            uint256, /*startedAt*/
-            uint256, /*updatedAt*/
-            uint80 /*answeredInRound*/
-        )
+    internal
+    view
+    returns (
+        uint80, /*roundId*/
+        int256, /*answer*/
+        uint256, /*startedAt*/
+        uint256, /*updatedAt*/
+        uint80 /*answeredInRound*/
+    )
     {
         IStdReference.ReferenceData memory data = bandOracle.getReferenceData(base, quote);
         uint256 round = block.timestamp;
@@ -144,7 +106,7 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
 
     // ========= GMX VaultPriceFeed integration =========
     function latestAnswer() external view returns (int256) {
-        (, int256 rate, uint256 time, , ) = _latestRoundData();
+        (, int256 rate, uint256 time, ,) = _latestRoundData();
 
         return int64(rate / 1e9);
     }
@@ -153,7 +115,7 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
 
     // ========= Pyth Interface =========
     function _getPrice() internal view returns (PythStructs.Price memory price) {
-        (, int256 rate, uint256 time, , ) = _latestRoundData();
+        (, int256 rate, uint256 time, ,) = _latestRoundData();
         price.publishTime = time;
         price.conf = 0;
         price.expo = 9;
@@ -161,89 +123,32 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
         return price;
     }
 
-    function getValidTimePeriod()
-        external
-        view
-        returns (
-            uint /*validTimePeriod*/
-        )
-    {
-        revert(NOT_IMPLEMENTED);
-    }
 
     function getPrice(
         bytes32 /*id*/
     )
-        external
-        view
-        returns (
-            PythStructs.Price memory /*price*/
-        )
+    external
+    view
+    returns (
+        PythStructs.Price memory /*price*/
+    )
     {
         return _getPrice();
     }
 
-    function getEmaPrice(
-        bytes32 /*id*/
-    )
-        external
-        view
-        returns (
-            PythStructs.Price memory /*price*/
-        )
-    {
-        revert(NOT_IMPLEMENTED);
-    }
 
     function getPriceUnsafe(
         bytes32 /*id*/
     )
-        external
-        view
-        returns (
-            PythStructs.Price memory /*price*/
-        )
+    external
+    view
+    returns (
+        PythStructs.Price memory /*price*/
+    )
     {
         return _getPrice();
     }
 
-    function getPriceNoOlderThan(
-        bytes32, /*id*/
-        uint /*age*/
-    )
-        external
-        view
-        returns (
-            PythStructs.Price memory /*price*/
-        )
-    {
-        revert(NOT_IMPLEMENTED);
-    }
-
-    function getEmaPriceUnsafe(
-        bytes32 /*id*/
-    )
-        external
-        view
-        returns (
-            PythStructs.Price memory /*price*/
-        )
-    {
-        revert(NOT_IMPLEMENTED);
-    }
-
-    function getEmaPriceNoOlderThan(
-        bytes32, /*id*/
-        uint /*age*/
-    )
-        external
-        view
-        returns (
-            PythStructs.Price memory /*price*/
-        )
-    {
-        revert(NOT_IMPLEMENTED);
-    }
 
     function updatePriceFeeds(
         bytes[] calldata /*updateData*/
@@ -263,19 +168,5 @@ contract BandOracleReader is AggregatorV2V3Interface, IPyth, Owned {
         feeAmount = updateFee;
     }
 
-    function parsePriceFeedUpdates(
-        bytes[] calldata updateData,
-        bytes32[] calldata priceIds,
-        uint64 minPublishTime,
-        uint64 maxPublishTime
-    )
-        external
-        payable
-        returns (
-            PythStructs.PriceFeed[] memory /*priceFeeds*/
-        )
-    {
-        revert(NOT_IMPLEMENTED);
-    }
     // =============================================
 }
