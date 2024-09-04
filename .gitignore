@@ -6,3 +6,4 @@ cache/
 !.env.example
 !.env.example.*
 broadcast/
+node_modules
